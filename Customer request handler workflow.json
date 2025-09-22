@@ -1,0 +1,1181 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Contact us - Partnership",
+        "formDescription": "If you are interested in collaboration, use this form, our team will contact you as soon as possible.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Company name",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Region",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "EMEA"
+                  },
+                  {
+                    "option": "APAC"
+                  },
+                  {
+                    "option": "US"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Company size",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "<10"
+                  },
+                  {
+                    "option": "10-200"
+                  },
+                  {
+                    "option": ">200"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email",
+              "fieldType": "email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Relevant documents",
+              "fieldType": "file",
+              "acceptFileTypes": ".pdf, .jpg"
+            },
+            {
+              "fieldLabel": "Request description"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        416,
+        304
+      ],
+      "id": "17b57fec-72fd-4c11-8c29-0fdd8011b0aa",
+      "name": "On form submission",
+      "webhookId": "9530f7f6-d3d4-4cbc-bb14-ab439cd4c51a"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1svW1h3kRmmuXUNMNOYafCPmASoCvyYGGDi4VYhNG4FQ",
+          "mode": "list",
+          "cachedResultName": "request sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1svW1h3kRmmuXUNMNOYafCPmASoCvyYGGDi4VYhNG4FQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "工作表1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1svW1h3kRmmuXUNMNOYafCPmASoCvyYGGDi4VYhNG4FQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Email": "={{ $json.Email }}",
+            "Name": "={{ $json.Name }}",
+            "Company name": "={{ $json['Company name'] }}",
+            "Region": "={{ $json.Region }}",
+            "Company size": "={{ $json['Company size'] }}",
+            "Date": "={{$now.format('dd/LL/yyyy')}}",
+            "Escalate": "={{ $json['Company size'] === \">200\" ? \"True\" : \"False\" }}",
+            "Request description": "={{ $json['Request description'] }}"
+          },
+          "matchingColumns": [
+            "Email"
+          ],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company name",
+              "displayName": "Company name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Region",
+              "displayName": "Region",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Company size",
+              "displayName": "Company size",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email",
+              "displayName": "Email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Request description",
+              "displayName": "Request description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Date",
+              "displayName": "Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Escalate",
+              "displayName": "Escalate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        640,
+        304
+      ],
+      "id": "62adf1cf-cbb8-45cc-b3de-6a450261356c",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "atfR4l5bN9Nt5dwm",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.Region }}",
+                    "rightValue": "EMEA",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "798323bc-377f-4af7-b90d-8923b977c7fd"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a2c6631d-0252-4ed1-9a2e-2d0d49508d0a",
+                    "leftValue": "={{ $json.Region }}",
+                    "rightValue": "APAC",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "675819dc-6f7b-4b30-a0cf-2e200baee27b",
+                    "leftValue": "={{ $json.Region }}",
+                    "rightValue": "US",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        912,
+        288
+      ],
+      "id": "b6ff3056-5826-400f-878e-7dd8f35a26f9",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Name }}\n{{ $json.Region }}\n\nThis potential partner has filled out the contact form, now you need to reach out to them, with specific questions to ask about his need, his business, and expected collboration mode (exclusive or non-exclusive)\n\nThis is the meeting booking link: https://cal.com/xiaoxian-dai-n78kq2/15min\n",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=\nYou are a Business development coordinator, handling potential customer request.\n\nBe nice and professional\nBe precise\nUse the same language as the request use"
+            },
+            {
+              "message": "=Please use below HTML FORMAT to write cutomized emails\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Business Development Inquiry</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            line-height: 1.6;\n            color: #333333;\n            max-width: 600px;\n            margin: 0 auto;\n            padding: 20px;\n        }\n        .header {\n            border-bottom: 2px solid #f0f0f0;\n            padding-bottom: 20px;\n            margin-bottom: 20px;\n        }\n        .footer {\n            border-top: 2px solid #f0f0f0;\n            padding-top: 20px;\n            margin-top: 30px;\n            font-size: 0.9em;\n            color: #666666;\n        }\n        ul {\n            padding-left: 20px;\n        }\n        li {\n            margin-bottom: 10px;\n        }\n        .highlight {\n            font-weight: bold;\n            color: #2c5aa0;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"header\">\n        <p>Dear {{ $json.Name }},</p>\n    </div>\n    \n    <div class=\"content\">\n        <p>My name is Kelly and I'm a Business Development Coordinator at [Your Company]. I received your inquiry through our contact form and I'm very interested in learning more about your needs and how we might collaborate in the {{ $json.Region }} region.</p>\n        \n        <p>To help me understand your requirements better, could you please provide some additional information about the following:</p>\n        \n        <ul>\n            <li><span class=\"highlight\">Your Business:</span> Could you please describe your company, its core business, and your current market position in EMEA?</li>\n            <li><span class=\"highlight\">Your Needs:</span> What are your goals for this collaboration?</li>\n            <li><span class=\"highlight\">Collaboration Mode:</span> Would you be interested in an exclusive or non-exclusive partnership? What are your thoughts on the scope of the collaboration?</li>\n        </ul>\n        \n        <p>I look forward to hearing from you and discussing potential opportunities further.</p>\n    </div>\n    \n    <div class=\"footer\">\n        <p>Sincerely,</p>\n        <p>Kelly<br>\n        AI Business development coordinator <br>\n        [Your Company]</p>\n    </div>\n</body>\n</html>"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        1232,
+        -592
+      ],
+      "id": "273b47c3-5267-4d09-9531-9cb6773f1b45",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat-v3-0324:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        -240
+      ],
+      "id": "80f2ce2d-acd3-4f0f-b8d9-109301159652",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "0Vu1H1hIfXGd4xH3",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"output\": \"content\" \n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1424,
+        -224
+      ],
+      "id": "b199d588-4349-497b-8d46-2115a27e8e95",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Switch').item.json.Email }}",
+        "subject": "=Hello  {{ $('Switch').item.json.Name }}, we are confirming the safe receipt of your request",
+        "message": "={{ $json.html }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1968,
+        272
+      ],
+      "id": "25ef8c9a-75c0-4a3f-aaaa-ee0286909c6d",
+      "name": "Send a message",
+      "webhookId": "25f482ce-e92c-46ec-8a3e-647b7a9bd5db",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "BLzhFR7RvvirNipc",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Name }}\n{{ $json.Region }}\n\nThis potential partner has filled out the contact form, now you need to reach out to them, with specific questions to ask about his need, his business, and expected collboration mode (exclusive or non-exclusive)\n\nThis is the meeting booking link: https://cal.com/xiaoxian-dai-n78kq2/15min\n\n",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=\nYou are a Business development coordinator, handling potential customer request.\n\nBe nice and professional\nBe precise\nUse the same language as the request use"
+            },
+            {
+              "message": "=Please use below HTML FORMAT to write cutomized emails\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Business Development Inquiry</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            line-height: 1.6;\n            color: #333333;\n            max-width: 600px;\n            margin: 0 auto;\n            padding: 20px;\n        }\n        .header {\n            border-bottom: 2px solid #f0f0f0;\n            padding-bottom: 20px;\n            margin-bottom: 20px;\n        }\n        .footer {\n            border-top: 2px solid #f0f0f0;\n            padding-top: 20px;\n            margin-top: 30px;\n            font-size: 0.9em;\n            color: #666666;\n        }\n        ul {\n            padding-left: 20px;\n        }\n        li {\n            margin-bottom: 10px;\n        }\n        .highlight {\n            font-weight: bold;\n            color: #2c5aa0;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"header\">\n        <p>Dear {{ $json.Name }},</p>\n    </div>\n    \n    <div class=\"content\">\n        <p>My name is Kelly and I'm a Business Development Coordinator at [Your Company]. I received your inquiry through our contact form and I'm very interested in learning more about your needs and how we might collaborate in the {{ $json.Region }} region.</p>\n        \n        <p>To help me understand your requirements better, could you please provide some additional information about the following:</p>\n        \n        <ul>\n            <li><span class=\"highlight\">Your Business:</span> Could you please describe your company, its core business, and your current market position in EMEA?</li>\n            <li><span class=\"highlight\">Your Needs:</span> What are your goals for this collaboration?</li>\n            <li><span class=\"highlight\">Collaboration Mode:</span> Would you be interested in an exclusive or non-exclusive partnership? What are your thoughts on the scope of the collaboration?</li>\n        </ul>\n        \n        <p>I look forward to hearing from you and discussing potential opportunities further.</p>\n    </div>\n    \n    <div class=\"footer\">\n        <p>Sincerely,</p>\n        <p>Kelly<br>\n        AI Business development coordinator <br>\n        [Your Company]</p>\n    </div>\n</body>\n</html>"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        1232,
+        -432
+      ],
+      "id": "3356cc0d-a377-401e-b83d-3320054e2a59",
+      "name": "Basic LLM Chain2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Name }}\n{{ $json.Region }}\n\nThis potential partner has filled out the contact form, now you need to reach out to them, with specific questions to ask about his need, his business, and expected collboration mode (exclusive or non-exclusive)\n\nThis is the meeting booking link: https://cal.com/xiaoxian-dai-n78kq2/15min\n",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=\nYou are a Business development coordinator, handling potential customer request.\n\nBe nice and professional\nBe precise\nUse the same language as the request use"
+            },
+            {
+              "message": "=Please use below HTML FORMAT to write cutomized emails\n\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Business Development Inquiry</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            line-height: 1.6;\n            color: #333333;\n            max-width: 600px;\n            margin: 0 auto;\n            padding: 20px;\n        }\n        .header {\n            border-bottom: 2px solid #f0f0f0;\n            padding-bottom: 20px;\n            margin-bottom: 20px;\n        }\n        .footer {\n            border-top: 2px solid #f0f0f0;\n            padding-top: 20px;\n            margin-top: 30px;\n            font-size: 0.9em;\n            color: #666666;\n        }\n        ul {\n            padding-left: 20px;\n        }\n        li {\n            margin-bottom: 10px;\n        }\n        .highlight {\n            font-weight: bold;\n            color: #2c5aa0;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"header\">\n        <p>Dear {{ $json.Name }},</p>\n    </div>\n    \n    <div class=\"content\">\n        <p>My name is Kelly and I'm a Business Development Coordinator at [Your Company]. I received your inquiry through our contact form and I'm very interested in learning more about your needs and how we might collaborate in the {{ $json.Region }} region.</p>\n        \n        <p>To help me understand your requirements better, could you please provide some additional information about the following:</p>\n        \n        <ul>\n            <li><span class=\"highlight\">Your Business:</span> Could you please describe your company, its core business, and your current market position in EMEA?</li>\n            <li><span class=\"highlight\">Your Needs:</span> What are your goals for this collaboration?</li>\n            <li><span class=\"highlight\">Collaboration Mode:</span> Would you be interested in an exclusive or non-exclusive partnership? What are your thoughts on the scope of the collaboration?</li>\n        </ul>\n        \n        <p>I look forward to hearing from you and discussing potential opportunities further.</p>\n    </div>\n    \n    <div class=\"footer\">\n        <p>Sincerely,</p>\n        <p>Kelly<br>\n        AI Business development coordinator <br>\n        [Your Company]</p>\n    </div>\n</body>\n</html>"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        1232,
+        -64
+      ],
+      "id": "edc538a2-00e4-473d-b02a-b2bde4df3aed",
+      "name": "Basic LLM Chain3"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        2224,
+        288
+      ],
+      "id": "95ee53a0-5456-4e10-aba7-8efce6575688",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "sendTo": "daixiaoxian0710@gmail.com",
+        "subject": "Hello team, new request arrived",
+        "message": "=We received requests from",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        2400,
+        304
+      ],
+      "id": "bc632c98-7635-421c-a720-11ad786d0c98",
+      "name": "Send a message3",
+      "webhookId": "965eeca3-f0ae-4a4d-b352-190265046ab7",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "BLzhFR7RvvirNipc",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "1Fi0DiW0m8CQYIWNriTpbAKZt5HdIN0gS",
+          "mode": "list",
+          "cachedResultName": "Company Profile.pdf",
+          "cachedResultUrl": "https://drive.google.com/file/d/1Fi0DiW0m8CQYIWNriTpbAKZt5HdIN0gS/view?usp=drivesdk"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        1168,
+        1184
+      ],
+      "id": "ec5cb0eb-fe67-40a1-9e59-cd6a3965abfc",
+      "name": "Download file",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "6hrG0lZSA2HQd2Tl",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        1184
+      ],
+      "id": "5337fc27-cb85-4f25-a19f-9eb7098e8650",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.text }}",
+        "textSplittingMode": "custom",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        1600,
+        1376
+      ],
+      "id": "d5a91c63-9ed3-46ee-b053-9e935416a3a5",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1584,
+        1536
+      ],
+      "id": "002f40e0-58cb-42c6-8dbf-ca2272287eae",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        944,
+        1184
+      ],
+      "id": "79ce2ad6-4e81-4564-95d6-882b80798be2",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8n2",
+          "mode": "list",
+          "cachedResultName": "n8n2"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        1616,
+        1184
+      ],
+      "id": "508d11f5-ce3d-4377-9a24-b81d1657eab3",
+      "name": "Pinecone Vector Store",
+      "credentials": {
+        "pineconeApi": {
+          "id": "Yznq8Uza3aJXSEjU",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1424,
+        1376
+      ],
+      "id": "f9ec2c94-bdbe-4979-88be-bee759c96aa4",
+      "name": "Embeddings Google Gemini2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "1tFLfeDy3dzwSOhC",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Name }} FROM {{ $json.Region }} send a collaboration request:\n{{ $json['Request description'] }}\n",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=# your role: you are a business coordinator, you handle and followup clients requests and write followup email in a professional way\n\n#Tool: always use Pinecone vector store - n8n2 to introduce company service\n\n#SOP:\nConfirm request receipt\nSelected less than 5 company services tailored to request description, introduce in the format as bullet points.\nWrite 3-follow up questions to clarify their need\nBe nice and professional\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1232,
+        272
+      ],
+      "id": "8c29b62f-3f05-439e-85f8-69226fbc14c8",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.0-flash-001",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        496
+      ],
+      "id": "539450f8-93d9-4dde-a9ee-833b4be5cfd9",
+      "name": "OpenRouter Chat Model2",
+      "credentials": {
+        "openRouterApi": {
+          "id": "0Vu1H1hIfXGd4xH3",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1.1,
+      "position": [
+        1296,
+        480
+      ],
+      "id": "2a493e1c-0ea7-4208-92e2-338c26f094f0",
+      "name": "Answer questions with a vector store1"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.embeddingsGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        656
+      ],
+      "id": "2570791f-8953-42d9-a010-d88aa2173ec8",
+      "name": "Embeddings Google Gemini",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "1tFLfeDy3dzwSOhC",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pineconeIndex": {
+          "__rl": true,
+          "value": "n8n2",
+          "mode": "list",
+          "cachedResultName": "n8n2"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
+      "typeVersion": 1.3,
+      "position": [
+        1312,
+        624
+      ],
+      "id": "82af3c22-37ed-4093-aeea-209a8b4a7353",
+      "name": "Pinecone Vector Store2",
+      "credentials": {
+        "pineconeApi": {
+          "id": "Yznq8Uza3aJXSEjU",
+          "name": "PineconeApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"email_template\": {\n    \"greeting\": \"Dear [Name],\",\n    \"intro\": \"Thank you for reaching out from [Region/Company] and expressing interest in our [Specific Service/Product]. We're excited to explore potential collaboration opportunities with you.\",\n    \"company_overview\": \"[Company Name] offers [Brief description of main offering] that [key benefits/value proposition].\",\n    \"services_section\": {\n      \"heading\": \"Our services include:\",\n      \"services\": [\n        \"[Service 1 Description]\",\n        \"[Service 2 Description]\", \n        \"[Service 3 Description]\",\n        \"[Service 4 Description]\"\n      ]\n    },\n    \"questions_section\": {\n      \"intro\": \"To better understand your specific needs and how we can tailor our solutions to your [business context], could you please provide more details on the following:\",\n      \"questions\": [\n        \"[Question 1]\",\n        \"[Question 2]\", \n        \"[Question 3]\"\n      ]\n    },\n    \"closing\": \"Looking forward to hearing from you and discussing how [Company Name] can help [specific benefit] for your business.\",\n    \"sign_off\": {\n      \"closing_phrase\": \"Best regards,\",\n      \"placeholder_name\": \"[Your Name]\",\n      \"title\": \"[Your Title]\"\n    }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1552,
+        496
+      ],
+      "id": "fd769bce-6ed5-4816-af51-4b6aea1b32f2",
+      "name": "Structured Output Parser1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const jsonData = $input.first().json.output;\nconst html = `\n<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"UTF-8\">\n<title>Financing Options</title>\n<style>\n  body {\n    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n    line-height: 1.6;\n    color: #333;\n    margin: 0;\n    padding: 0;\n    background-color: #f4f4f4;\n  }\n  .container {\n    width: 90%;\n    max-width: 600px;\n    margin: 20px auto;\n    background-color: #fff;\n    padding: 30px;\n    border-radius: 8px;\n    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);\n  }\n  .header {\n    text-align: center;\n    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n    color: white;\n    padding: 30px 20px;\n    border-radius: 8px 8px 0 0;\n    margin: -30px -30px 30px -30px;\n  }\n  .header h1 {\n    font-size: 28px;\n    margin: 0 0 10px 0;\n    font-weight: bold;\n  }\n  .header h2 {\n    font-size: 18px;\n    margin: 0;\n    font-weight: normal;\n    opacity: 0.9;\n  }\n  h1 {\n    color: #007bff;\n    margin-bottom: 25px;\n    font-size: 24px;\n  }\n  p {\n    margin-bottom: 20px;\n    font-size: 16px;\n  }\n  .section {\n    margin-bottom: 25px;\n  }\n  .section-heading {\n    font-size: 18px;\n    font-weight: bold;\n    color: #2c3e50;\n    margin-bottom: 15px;\n    border-left: 4px solid #667eea;\n    padding-left: 10px;\n  }\n  .service-item, .question-item {\n    background-color: #f9f9f9;\n    padding: 15px;\n    border-radius: 6px;\n    margin-bottom: 15px;\n    border: 1px solid #eee;\n  }\n  .service-item strong, .question-item strong {\n    color: #007bff;\n    font-weight: 600;\n  }\n  .contact-highlight {\n    background-color: #e8f5e8;\n    padding: 20px;\n    border-radius: 6px;\n    border-left: 4px solid #28a745;\n    margin: 25px 0;\n    text-align: center;\n  }\n  .button {\n    display: inline-block;\n    background-color: #ffffff;\n    color: #007bff;\n    padding: 12px 25px;\n    text-decoration: none;\n    border-radius: 6px;\n    margin-top: 10px;\n    font-size: 16px;\n    font-weight: 600;\n    border: 2px solid #007bff;\n}\n.button:hover {\n    background-color: #007bff;\n    color: #ffffff;\n}\n  ul {\n    list-style-type: none;\n    padding: 0;\n  }\n  .footer {\n    text-align: center;\n    padding: 20px;\n    background-color: #f8f9fa;\n    border-radius: 0 0 8px 8px;\n    margin: 30px -30px -30px -30px;\n    font-size: 12px;\n    color: #666;\n  }\n  .powered-by {\n    font-weight: bold;\n    color: #2c3e50;\n    margin-top: 10px;\n  }\n  .copyright {\n    margin-top: 5px;\n    font-size: 11px;\n  }\n</style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      <h1>AuraSphere</h1>\n      <h2>for your interest in financing with us!</h2>\n    </div>\n    \n    <p><strong>${jsonData.email_template.greeting}</strong></p>\n    <p>${jsonData.email_template.intro}</p>\n    <p>${jsonData.email_template.company_overview}</p>\n    \n    <div class=\"section\">\n      <div class=\"section-heading\">${jsonData.email_template.services_section.heading}</div>\n      <ul>\n        ${jsonData.email_template.services_section.services.map(service => `\n          <li class=\"service-item\">\n            <strong>✓</strong> ${service}\n          </li>\n        `).join('')}\n      </ul>\n    </div>\n    \n    <div class=\"section\">\n      <div class=\"section-heading\">Next Steps</div>\n      <div class=\"question-item\">${jsonData.email_template.questions_section.intro}</div>\n      <ul>\n        ${jsonData.email_template.questions_section.questions.map(question => `\n          <li class=\"question-item\">\n            <strong>•</strong> ${question}\n          </li>\n        `).join('')}\n      </ul>\n    </div>\n    \n    <div class=\"contact-highlight\">\n      <strong>Ready to schedule your appointment?</strong><br>\n      <a href=\"https://cal.com/xiaoxian-dai-n78kq2/15min\" class=\"button\">Click here to book an appointment</a>\n    </div>\n    \n    <p>${jsonData.email_template.closing}</p>\n    \n    <p>\n      <strong>${jsonData.email_template.sign_off.closing_phrase}</strong><br>\n      ${jsonData.email_template.sign_off.placeholder_name}<br>\n      ${jsonData.email_template.sign_off.title}\n    </p>\n    \n    <div class=\"footer\">\n      <div class=\"powered-by\">Financing Powered by www.denerfits.com</div>\n      <div class=\"copyright\">Denerfits © 2020, All rights reserved.</div>\n    </div>\n  </div>\n</body>\n</html>\n`;\n\nreturn [{ json: { html: html } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1664,
+        272
+      ],
+      "id": "02999c05-f98d-44b3-b0f1-1322d4a9ecfd",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "content": "## Upload data from Googledrive to Vector store",
+        "height": 672,
+        "width": 1088,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        832,
+        1008
+      ],
+      "typeVersion": 1,
+      "id": "ee7575eb-4fd8-49fd-996a-24e11ea243af",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "### Collect customer request by Form",
+        "height": 352
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        320,
+        192
+      ],
+      "typeVersion": 1,
+      "id": "f016278a-a4d1-423a-8321-390fc012dc76",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "### Document data into Google sheet",
+        "height": 352
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        576,
+        192
+      ],
+      "typeVersion": 1,
+      "id": "e1821b46-28dc-4cf8-8d7c-dbbcbc4322d8",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "### Filter or segment request by certain attribute (if needed)",
+        "height": 352
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        832,
+        192
+      ],
+      "typeVersion": 1,
+      "id": "c5f39fd0-3092-45c1-a5c3-eb96ffd79931",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "### Generate customized content with AI Agent",
+        "height": 256,
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1184,
+        176
+      ],
+      "typeVersion": 1,
+      "id": "9c7bee8a-69db-42bb-9b43-6b194f96c05a",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## RAG",
+        "height": 368,
+        "width": 544,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1120,
+        464
+      ],
+      "typeVersion": 1,
+      "id": "8dce08ef-a1ba-47ac-9608-fe6130c5f33e",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "### JSON CONVERT TO HTML",
+        "height": 208
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1584,
+        208
+      ],
+      "typeVersion": 1,
+      "id": "147b6128-7ace-40ab-8ecd-cab0c80c02d8",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "### Send email to client",
+        "height": 208,
+        "width": 256
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1872,
+        208
+      ],
+      "typeVersion": 1,
+      "id": "13cc4ba3-b5ae-4439-a45a-4a1a170f92ed",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "### Summarize client request and response, report to the team",
+        "height": 288,
+        "width": 384
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2176,
+        192
+      ],
+      "typeVersion": 1,
+      "id": "102ef1ea-8d05-4eca-89b8-8e5b81ddeae4",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "### Customized email content with LLM",
+        "height": 816,
+        "width": 464
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1120,
+        -672
+      ],
+      "typeVersion": 1,
+      "id": "93efd2ec-16cc-4818-8d1c-2f29a9df31c8",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {
+    "On form submission": [
+      {
+        "json": {
+          "Name": "Xiaoxian Dai",
+          "Company name": "solova",
+          "Region": "EMEA",
+          "Company size": ">200",
+          "Email": "daixiaoxian0710@outlook.com",
+          "Relevant documents": null,
+          "Request description": "We are interested in your customer attraction model in e-commerce",
+          "submittedAt": "2025-09-21T22:20:43.493+02:00",
+          "formMode": "test"
+        }
+      }
+    ],
+    "AI Agent1": [
+      {
+        "json": {
+          "output": {
+            "email_template": {
+              "greeting": "Dear Xiaoxian Dai,",
+              "intro": "Thank you for reaching out and expressing interest in AuraSphere’s customer attraction model for e-commerce. We appreciate the opportunity to explore how we can help enhance your customer engagement and drive growth.",
+              "company_overview": "AuraSphere specializes in leveraging AI to personalize the e-commerce experience, automate content creation, and provide intelligent customer service. Our solutions are designed to attract, engage, and retain customers, ultimately maximizing customer lifetime value.",
+              "services_section": {
+                "heading": "Here are a few key services that align with your interest in customer attraction:",
+                "services": [
+                  "AI-Powered Customer Intelligence & Personalization: Dynamic product recommendations, personalized search & navigation, and segmented marketing automation.",
+                  "Automated Content & Media Generation: AI-generated product descriptions, marketing copy, and visual enhancements.",
+                  "Intelligent Customer Service Automation: AI shopping assistant providing 24/7 support and instant answers."
+                ]
+              },
+              "questions_section": {
+                "intro": "To better understand your specific needs and how AuraSphere can best assist you, could you please clarify the following:",
+                "questions": [
+                  "What are your primary goals for customer attraction in e-commerce?",
+                  "Which specific challenges are you currently facing in attracting and retaining customers?",
+                  "What is your current tech stack?"
+                ]
+              },
+              "closing": "We look forward to hearing from you and discussing how AuraSphere can help you achieve your customer attraction goals.",
+              "sign_off": {
+                "closing_phrase": "Best regards,",
+                "placeholder_name": "[Your Name]",
+                "title": "Business Coordinator"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append or update row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        []
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain2",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain3",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain2",
+            "type": "ai_outputParser",
+            "index": 0
+          },
+          {
+            "node": "Basic LLM Chain3",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        []
+      ]
+    },
+    "Basic LLM Chain2": {
+      "main": [
+        []
+      ]
+    },
+    "Basic LLM Chain3": {
+      "main": [
+        []
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Send a message3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini2": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Answer questions with a vector store1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Answer questions with a vector store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings Google Gemini": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Pinecone Vector Store2",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pinecone Vector Store2": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Answer questions with a vector store1",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "406e9dac-d725-4479-8796-bba626139aa4",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1234f8ad1774ea16e5c29c1f1e52122c16fa7723f192e4eb4e869a89078f47d4"
+  },
+  "id": "N6yjUIHbeCfmGxOu",
+  "tags": []
+}
