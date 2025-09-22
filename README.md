@@ -1,6 +1,8 @@
 # Customer Request Handler Workflow
 
 An automated, AI-powered n8n workflow for handling incoming partnership or customer inquiries. It captures, processes, enriches, and responds to requests efficiently, ensuring professional and personalized follow-up.
+<img width="2050" height="1140" alt="image" src="https://github.com/user-attachments/assets/5c970665-d30c-45be-b2af-8de5c16411cf" />
+
 
 ## 📋 Overview
 
