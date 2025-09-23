@@ -1,0 +1,728 @@
+{
+  "name": "Data Tables",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        2208,
+        -32
+      ],
+      "id": "128d9a6a-c291-4f73-b005-ba726ba20335",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "content": "## Inserting Sales Data\n",
+        "height": 256,
+        "width": 960,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2064,
+        -112
+      ],
+      "id": "3e2a9e02-828e-4125-84e1-97163de7d1e4",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1_xxE3B-9totlK11nRo8gRRVFlO4RACDYmOTRY4gFX68",
+          "mode": "list",
+          "cachedResultName": "Sales Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_xxE3B-9totlK11nRo8gRRVFlO4RACDYmOTRY4gFX68/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1_xxE3B-9totlK11nRo8gRRVFlO4RACDYmOTRY4gFX68/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2368,
+        -32
+      ],
+      "id": "64203f85-8f9f-49de-9b25-a6ca6afed9fa",
+      "name": "Get Sales Data",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "atfR4l5bN9Nt5dwm",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "dataTableId": {
+          "__rl": true,
+          "value": "3tUFwXx5a0vDqM66",
+          "mode": "list",
+          "cachedResultName": "sales data",
+          "cachedResultUrl": "/projects/Cjw9cUFkwTtzCTZg/datatables/3tUFwXx5a0vDqM66"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "productname": "={{ $json['Product Name'] }}",
+            "price": "={{ $json.Price }}",
+            "quantitysold": "={{ $json['Quantity Sold'] }}",
+            "totalrevenue": "={{ $json['Total Revenue'] }}",
+            "datesold": "={{ $json['Date Sold'] }}",
+            "productid": "={{ $json['Product ID'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "productname",
+              "displayName": "productname",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "datesold",
+              "displayName": "datesold",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "quantitysold",
+              "displayName": "quantitysold",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "productid",
+              "displayName": "productid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "totalrevenue",
+              "displayName": "totalrevenue",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        2576,
+        -32
+      ],
+      "id": "de0e3856-bb03-453e-9cb0-717062b5bc8b",
+      "name": "Insert Sales Data"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        2144,
+        256
+      ],
+      "id": "ecfc1e62-ffff-4755-8079-ac95593f4a71",
+      "name": "When chat message received",
+      "webhookId": "76180fca-c02c-4325-93e3-bc4df5863e3f"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "3tUFwXx5a0vDqM66",
+          "mode": "list",
+          "cachedResultName": "sales data",
+          "cachedResultUrl": "/projects/Cjw9cUFkwTtzCTZg/datatables/3tUFwXx5a0vDqM66"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "productname",
+              "keyValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('conditions0_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "limit": null
+      },
+      "type": "n8n-nodes-base.dataTableTool",
+      "typeVersion": 1,
+      "position": [
+        2496,
+        464
+      ],
+      "id": "385d1504-8a90-476a-9a9a-b41e19d26669",
+      "name": "Product Name Query"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "3tUFwXx5a0vDqM66",
+          "mode": "list",
+          "cachedResultName": "sales data",
+          "cachedResultUrl": "/projects/Cjw9cUFkwTtzCTZg/datatables/3tUFwXx5a0vDqM66"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "datesold",
+              "keyValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('conditions0_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "limit": null
+      },
+      "type": "n8n-nodes-base.dataTableTool",
+      "typeVersion": 1,
+      "position": [
+        2640,
+        464
+      ],
+      "id": "1111c863-1438-4ff6-a4c5-be02d196f02a",
+      "name": "Date Query"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "3tUFwXx5a0vDqM66",
+          "mode": "list",
+          "cachedResultName": "sales data",
+          "cachedResultUrl": "/projects/Cjw9cUFkwTtzCTZg/datatables/3tUFwXx5a0vDqM66"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "productid",
+              "keyValue": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('conditions0_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "limit": null
+      },
+      "type": "n8n-nodes-base.dataTableTool",
+      "typeVersion": 1,
+      "position": [
+        2768,
+        464
+      ],
+      "id": "2e11c81f-0ce8-4e0f-84f9-5711849b146b",
+      "name": "Product ID Query"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "3tUFwXx5a0vDqM66",
+          "mode": "list",
+          "cachedResultName": "sales data",
+          "cachedResultUrl": "/projects/Cjw9cUFkwTtzCTZg/datatables/3tUFwXx5a0vDqM66"
+        },
+        "limit": null
+      },
+      "type": "n8n-nodes-base.dataTableTool",
+      "typeVersion": 1,
+      "position": [
+        2352,
+        464
+      ],
+      "id": "d92e6fec-11f6-4b4b-b5a2-1c2736829f18",
+      "name": "All Rows"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        2896,
+        464
+      ],
+      "id": "40e8bff7-be1a-4982-8c6b-aeff898b3206",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=# Overview\nYou are **Master Sales Data Analyst AI**, an expert in analyzing sales data and answering user queries with precision.  \nYou have access to the following tools:\n\n1. **AllRows** – returns all rows in the sales database.  \n2. **ProductNameQuery** – returns rows filtered by product name.  \n   - Valid product names: *Wireless Headphones*, *Bluetooth Speaker*, *Phone Case*.  \n3. **DateQuery** – returns rows filtered by a specific date.  \n   - Date format: `YYYY-MM-DD` (e.g., `2025-09-15`).  \n4. **ProductIDQuery** – returns rows filtered by product ID.  \n   - Valid IDs: *WH001* (Wireless Headphones), *BS002* (Bluetooth Speaker), *PC003* (Phone Case).  \n5. **Calculator** – use this whenever you need to perform math operations (e.g., sum, averages, totals, percentages). Never attempt math manually.\n\n---\n\n### Core Instructions:\n- Always **use the most specific tool** available for the user’s query.  \n  - If the query references a product name → use `ProductNameQuery`.  \n  - If the query references a product ID → use `ProductIDQuery`.  \n  - If the query references a date → use `DateQuery`.  \n  - If multiple filters are implied (e.g., “How many Wireless Headphones were sold on 2025-09-15?”), combine multiple queries logically by calling the relevant tools in sequence.  \n  - If no filter is given, or you need to explore broadly, use `AllRows`.  \n- If calculations are required (sums, averages, revenues, comparisons, etc.), **always send the data to the Calculator tool**.  \n- Never assume values—always confirm by retrieving data through the tools.  \n- Be concise, clear, and professional in your explanations.\n- Always explain your calculation process and ask whether the asker want a detailed drilldown\n\n---\n\n### Example Behaviors:\n- **User**: “How many Wireless Headphones were sold on 2025-09-15?”  \n  - Use `ProductNameQuery` for Wireless Headphones.  \n  - Then filter with `DateQuery` for 2025-09-15.  \n  - Send results to **Calculator** to sum quantities.  \n  - Return the answer and the explanation of calculation process.\n\n- **User**: “What’s the total revenue for product ID BS002?”  \n  - Use `ProductIDQuery` for BS002.  \n  - Multiply *price × quantity* via **Calculator**.  \n  - Provide total revenue.\n\n- **User**: “Show me all sales.”  \n  - Use `AllRows` and return the dataset.\n\n---\n\n### Your Mission:\nYou are the ultimate sales analyst.  \nAnswer questions with precision, use the right tool every time, and provide clear explanations of how results were derived.  \nAlways confirm with data before performing analysis.  \nCurrent date/time: {{ $now }}\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        2336,
+        256
+      ],
+      "id": "1fd2155e-812e-4f7e-98a2-bb79e33d394e",
+      "name": "Sales Data Agent"
+    },
+    {
+      "parameters": {
+        "content": "## Sales Lookup\n",
+        "height": 448,
+        "width": 960,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2064,
+        176
+      ],
+      "id": "dfdace53-6a98-4c04-bf1a-9dd14ca3af84",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        2208,
+        464
+      ],
+      "id": "6d06b489-311c-43a7-832d-ebe9dc5ef0f9",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "O1iALqYX5XBN5l8E",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Insert Sales Data": [
+      {
+        "json": {
+          "id": 21,
+          "createdAt": "2025-09-23T10:53:38.434Z",
+          "updatedAt": "2025-09-23T10:53:38.434Z",
+          "productname": "Wireless Headphones",
+          "datesold": "2025-09-15",
+          "price": 79.99,
+          "quantitysold": 2,
+          "productid": "WH001",
+          "totalrevenue": 159.98
+        }
+      },
+      {
+        "json": {
+          "id": 22,
+          "createdAt": "2025-09-23T10:53:38.435Z",
+          "updatedAt": "2025-09-23T10:53:38.435Z",
+          "productname": "Bluetooth Speaker",
+          "datesold": "2025-09-15",
+          "price": 45.5,
+          "quantitysold": 1,
+          "productid": "BS002",
+          "totalrevenue": 45.5
+        }
+      },
+      {
+        "json": {
+          "id": 23,
+          "createdAt": "2025-09-23T10:53:38.436Z",
+          "updatedAt": "2025-09-23T10:53:38.436Z",
+          "productname": "Phone Case",
+          "datesold": "2025-09-15",
+          "price": 12.99,
+          "quantitysold": 3,
+          "productid": "PC003",
+          "totalrevenue": 38.97
+        }
+      },
+      {
+        "json": {
+          "id": 24,
+          "createdAt": "2025-09-23T10:53:38.437Z",
+          "updatedAt": "2025-09-23T10:53:38.437Z",
+          "productname": "Wireless Headphones",
+          "datesold": "2025-09-15",
+          "price": 79.99,
+          "quantitysold": 1,
+          "productid": "WH001",
+          "totalrevenue": 79.99
+        }
+      },
+      {
+        "json": {
+          "id": 25,
+          "createdAt": "2025-09-23T10:53:38.437Z",
+          "updatedAt": "2025-09-23T10:53:38.437Z",
+          "productname": "Bluetooth Speaker",
+          "datesold": "2025-09-15",
+          "price": 45.5,
+          "quantitysold": 2,
+          "productid": "BS002",
+          "totalrevenue": 91
+        }
+      },
+      {
+        "json": {
+          "id": 26,
+          "createdAt": "2025-09-23T10:53:38.438Z",
+          "updatedAt": "2025-09-23T10:53:38.438Z",
+          "productname": "Phone Case",
+          "datesold": "2025-09-15",
+          "price": 12.99,
+          "quantitysold": 1,
+          "productid": "PC003",
+          "totalrevenue": 12.99
+        }
+      },
+      {
+        "json": {
+          "id": 27,
+          "createdAt": "2025-09-23T10:53:38.438Z",
+          "updatedAt": "2025-09-23T10:53:38.438Z",
+          "productname": "Wireless Headphones",
+          "datesold": "2025-09-16",
+          "price": 79.99,
+          "quantitysold": 3,
+          "productid": "WH001",
+          "totalrevenue": 239.96999999999997
+        }
+      },
+      {
+        "json": {
+          "id": 28,
+          "createdAt": "2025-09-23T10:53:38.439Z",
+          "updatedAt": "2025-09-23T10:53:38.439Z",
+          "productname": "Bluetooth Speaker",
+          "datesold": "2025-09-16",
+          "price": 45.5,
+          "quantitysold": 1,
+          "productid": "BS002",
+          "totalrevenue": 45.5
+        }
+      },
+      {
+        "json": {
+          "id": 29,
+          "createdAt": "2025-09-23T10:53:38.440Z",
+          "updatedAt": "2025-09-23T10:53:38.440Z",
+          "productname": "Phone Case",
+          "datesold": "2025-09-16",
+          "price": 12.99,
+          "quantitysold": 2,
+          "productid": "PC003",
+          "totalrevenue": 25.98
+        }
+      },
+      {
+        "json": {
+          "id": 30,
+          "createdAt": "2025-09-23T10:53:38.440Z",
+          "updatedAt": "2025-09-23T10:53:38.440Z",
+          "productname": "Wireless Headphones",
+          "datesold": "2025-09-16",
+          "price": 79.99,
+          "quantitysold": 1,
+          "productid": "WH001",
+          "totalrevenue": 79.99
+        }
+      },
+      {
+        "json": {
+          "id": 31,
+          "createdAt": "2025-09-23T10:53:38.442Z",
+          "updatedAt": "2025-09-23T10:53:38.442Z",
+          "productname": "Bluetooth Speaker",
+          "datesold": "2025-09-16",
+          "price": 45.5,
+          "quantitysold": 4,
+          "productid": "BS002",
+          "totalrevenue": 182
+        }
+      },
+      {
+        "json": {
+          "id": 32,
+          "createdAt": "2025-09-23T10:53:38.442Z",
+          "updatedAt": "2025-09-23T10:53:38.442Z",
+          "productname": "Phone Case",
+          "datesold": "2025-09-16",
+          "price": 12.99,
+          "quantitysold": 1,
+          "productid": "PC003",
+          "totalrevenue": 12.99
+        }
+      },
+      {
+        "json": {
+          "id": 33,
+          "createdAt": "2025-09-23T10:53:38.443Z",
+          "updatedAt": "2025-09-23T10:53:38.443Z",
+          "productname": "Wireless Headphones",
+          "datesold": "2025-09-16",
+          "price": 79.99,
+          "quantitysold": 2,
+          "productid": "WH001",
+          "totalrevenue": 159.98
+        }
+      },
+      {
+        "json": {
+          "id": 34,
+          "createdAt": "2025-09-23T10:53:38.444Z",
+          "updatedAt": "2025-09-23T10:53:38.444Z",
+          "productname": "Bluetooth Speaker",
+          "datesold": "2025-09-17",
+          "price": 45.5,
+          "quantitysold": 1,
+          "productid": "BS002",
+          "totalrevenue": 45.5
+        }
+      },
+      {
+        "json": {
+          "id": 35,
+          "createdAt": "2025-09-23T10:53:38.444Z",
+          "updatedAt": "2025-09-23T10:53:38.444Z",
+          "productname": "Phone Case",
+          "datesold": "2025-09-17",
+          "price": 12.99,
+          "quantitysold": 5,
+          "productid": "PC003",
+          "totalrevenue": 64.95
+        }
+      },
+      {
+        "json": {
+          "id": 36,
+          "createdAt": "2025-09-23T10:53:38.445Z",
+          "updatedAt": "2025-09-23T10:53:38.445Z",
+          "productname": "Wireless Headphones",
+          "datesold": "2025-09-17",
+          "price": 79.99,
+          "quantitysold": 1,
+          "productid": "WH001",
+          "totalrevenue": 79.99
+        }
+      },
+      {
+        "json": {
+          "id": 37,
+          "createdAt": "2025-09-23T10:53:38.445Z",
+          "updatedAt": "2025-09-23T10:53:38.445Z",
+          "productname": "Bluetooth Speaker",
+          "datesold": "2025-09-17",
+          "price": 45.5,
+          "quantitysold": 2,
+          "productid": "BS002",
+          "totalrevenue": 91
+        }
+      },
+      {
+        "json": {
+          "id": 38,
+          "createdAt": "2025-09-23T10:53:38.446Z",
+          "updatedAt": "2025-09-23T10:53:38.446Z",
+          "productname": "Phone Case",
+          "datesold": "2025-09-17",
+          "price": 12.99,
+          "quantitysold": 1,
+          "productid": "PC003",
+          "totalrevenue": 12.99
+        }
+      },
+      {
+        "json": {
+          "id": 39,
+          "createdAt": "2025-09-23T10:53:38.447Z",
+          "updatedAt": "2025-09-23T10:53:38.447Z",
+          "productname": "Wireless Headphones",
+          "datesold": "2025-09-17",
+          "price": 79.99,
+          "quantitysold": 2,
+          "productid": "WH001",
+          "totalrevenue": 159.98
+        }
+      },
+      {
+        "json": {
+          "id": 40,
+          "createdAt": "2025-09-23T10:53:38.447Z",
+          "updatedAt": "2025-09-23T10:53:38.447Z",
+          "productname": "Bluetooth Speaker",
+          "datesold": "2025-09-17",
+          "price": 45.5,
+          "quantitysold": 1,
+          "productid": "BS002",
+          "totalrevenue": 45.5
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get Sales Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Sales Data": {
+      "main": [
+        [
+          {
+            "node": "Insert Sales Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Sales Data Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product Name Query": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sales Data Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date Query": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sales Data Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Product ID Query": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sales Data Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "All Rows": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sales Data Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "Sales Data Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Sales Data Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f323d6dc-db35-4962-9329-4006251cb469",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1234f8ad1774ea16e5c29c1f1e52122c16fa7723f192e4eb4e869a89078f47d4"
+  },
+  "id": "P5WgqwkrAQczYf4z",
+  "tags": []
+}
